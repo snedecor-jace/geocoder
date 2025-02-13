@@ -11,9 +11,9 @@
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js"></script>
     <link
-    rel="stylesheet"
-    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
-    type="text/css"
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+      type="text/css"
     />
     <style>
       body {
@@ -50,40 +50,41 @@
           placeholder: 'Search for places in Seattle',
           mapboxgl: mapboxgl, // Set the mapbox-gl instance
           marker: false, // Do not use the default marker style
+          bbox: [-122.45014143459986, 47.52044874298002, -122.24126846625641, 47.732721406337646],
           proximity: {
             longitude: -122.33307466522028,
             latitude: 47.60556468772768
-        }
+          }
         });
 
         // Add the geocoder to the map
         map.addControl(geocoder);
 
         map.on('load', () => {
-            map.addSource('single-point', {
-                type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: []
-                }
-            });
+          map.addSource('single-point', {
+            type: 'geojson',
+            data: {
+                type: 'FeatureCollection',
+                features: []
+            }
+          });
 
-            map.addLayer({
-                id: 'point',
-                source: 'single-point',
-                type: 'circle',
-                paint: {
-                    'circle-radius': 10,
-                    'circle-color': '#448ee4'
-                }
-            });
+          map.addLayer({
+            id: 'point',
+            source: 'single-point',
+            type: 'circle',
+            paint: {
+              'circle-radius': 10,
+              'circle-color': 'red'
+            }
+          });
 
-            // Listen for the `result` event from the Geocoder
-            // `result` event is triggered when a user makes a selection
-            //  Add a marker at the result's coordinates
-            geocoder.on('result', (event) => {
-                map.getSource('single-point').setData(event.result.geometry);
-            });
+          // Listen for the `result` event from the Geocoder
+          // `result` event is triggered when a user makes a selection
+          //  Add a marker at the result's coordinates
+          geocoder.on('result', (event) => {
+            map.getSource('single-point').setData(event.result.geometry);
+          });
         });
       </script>
   </body>
